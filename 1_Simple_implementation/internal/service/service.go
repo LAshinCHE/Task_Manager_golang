@@ -8,3 +8,13 @@ type storage interface {
 	Update(model.Task) error
 	Delete(int) error
 }
+
+type service struct {
+	storage storage
+}
+
+func NewService(st storage) *service {
+	return &service{
+		storage: st,
+	}
+}

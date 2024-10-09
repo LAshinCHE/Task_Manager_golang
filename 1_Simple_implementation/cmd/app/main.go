@@ -1,21 +1,23 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
-	"github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/app/comands"
+	"github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/service"
+	"github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/storage"
 )
 
 func main() {
 	argsWithoutProgs := os.Args[1:]
 
-	c := comands.NewCommander(argsWithoutProgs)
+	filename := "Storage_1"
+
+	st := storage.NewStorage(filename)
+	s := service.NewService(st)
 
 	if len(argsWithoutProgs) == 0 {
-		c.Help()
 		log.Fatal("The program is running without arguments, please enter the arguments from the list")
 	}
-	fmt.Print("Hello golang")
+
 }
