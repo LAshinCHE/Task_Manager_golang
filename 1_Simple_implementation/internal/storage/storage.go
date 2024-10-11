@@ -1,17 +1,28 @@
 package storage
 
-import "github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/model"
+import (
+	"os"
+
+	"github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/model"
+)
+
+const storageFile = "../data/data.json"
 
 type Storage struct {
-	filename string
+	storage *os.File
 }
 
-func NewStorage(f string) Storage {
-	return Storage{
-		filename: f,
+func NewStorage() (Storage, error) {
+	file, err := os.OpenFile(storageFile, os.O_CREATE, 0777)
+	if err != nil {
+		return Storage{}, err
 	}
+	return Storage{storage: file}, nil
 }
 
+func (s Storage) CloseStorage() error {
+	return s.storage.Close()
+}
 func (s Storage) Add(model.TaksInput) error {
 	return nil
 }

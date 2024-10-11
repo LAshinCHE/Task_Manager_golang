@@ -12,12 +12,20 @@ import (
 func main() {
 	argsWithoutProgs := os.Args[1:]
 
-	filename := "Storage_1"
+	st, err := storage.NewStorage()
 
-	st := storage.NewStorage(filename)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	serv := service.NewService(st)
 
-	err := commander.HandleCommand(argsWithoutProgs, serv)
+	err = commander.HandleCommand(argsWithoutProgs, serv)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = st.CloseStorage()
 	if err != nil {
 		log.Fatal(err)
 	}
