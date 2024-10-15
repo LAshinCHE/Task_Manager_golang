@@ -6,28 +6,31 @@ import (
 	"github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/model"
 )
 
-const storageFile = "../data/data.json"
+const storageFile = "./data/data.json"
 
 type Storage struct {
-	storage *os.File
+	filename string
 }
 
-func NewStorage() (Storage, error) {
-	file, err := os.OpenFile(storageFile, os.O_CREATE, 0777)
+func NewStorage(name string) Storage {
+	return Storage{filename: name}
+}
+
+func (s Storage) createFile() error {
+	f, err := os.Create(s.filename)
 	if err != nil {
-		return Storage{}, err
+		return err
 	}
-	return Storage{storage: file}, nil
+	defer f.Close()
+	return nil
 }
 
-func (s Storage) CloseStorage() error {
-	return s.storage.Close()
-}
-func (s Storage) Add(model.TaksInput) error {
+func (s Storage) AddTask(model.TaksInput) error {
 	return nil
 }
 
 func (s Storage) Get(string, ...int) ([]model.Task, error) {
+
 	return nil, nil
 }
 
