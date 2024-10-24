@@ -12,15 +12,13 @@ import (
 func main() {
 	argsWithoutProgs := os.Args[1:]
 
-	st := storage.NewStorage("storage")
+	storageJson := storage.NewStorage("storage")
 
-	serv := service.NewService(st)
+	taskManagerService := service.NewService(storageJson)
 
-	err := cli.HandleCommand(argsWithoutProgs, serv)
-	if err != nil {
-		log.Fatal(err)
-	}
+	executor := cli.NewCLI(cli.Deps{Service: taskManagerService})
 
+	err := executor.HandleCommand(argsWithoutProgs)
 	if err != nil {
 		log.Fatal(err)
 	}

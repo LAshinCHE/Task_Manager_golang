@@ -23,7 +23,14 @@ func NewService(st storage) *Service {
 	}
 }
 
-func (s Service) AddTask(excecutionPeriod int, descption string)
+func (s Service) AddTask(excecutionPeriod int, descption string) error {
+	task := model.TaksInput{
+		ID:          1,
+		EmployeeID:  1,
+		Description: descption,
+	}
+	return s.storage.AddTask(task)
+}
 
 func (s *Service) Help() {
 	fmt.Println("-help - print list command")
