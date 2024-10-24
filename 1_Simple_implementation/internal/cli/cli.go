@@ -1,11 +1,14 @@
 package cli
 
 import (
+	"flag"
 	"fmt"
+
+	"github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/model"
 )
 
 type Service interface {
-	AddTask(excecutionPeriod int, descption string) error
+	AddTask(model.TaskDTO) error
 }
 
 type Deps struct {
@@ -56,7 +59,7 @@ func (c CLI) HandleCommand(commands []string) error {
 		c.help()
 		return nil
 	case addTask:
-		return c.addTask()
+		return c.addTask(commands[1:])
 	case deleteTask:
 		return c.deleteTask()
 	case listTask:
@@ -78,8 +81,31 @@ func (c CLI) help() {
 
 // TODO addTask - функция должна добавлять задачу в хранилище
 // TODO - описать DTO передоваемые между модулями данные
-func (c CLI) addTask() error {
-	return nil
+func (c CLI) addTask(args []string) error {
+	var name, description string
+
+	fs := flag.NewFlagSet(addTask, flag.ContinueOnError)
+	fs.StringVar(&name, "name", "", "use --name=someName")
+	fs.StringVar(&description, "description", "", "use --description=some_description")
+
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+
+	if len(name) == 0 {
+		return fmt.Errorf("Your task has empty name, please enter the name with flag --name")
+	}
+
+	if len(description) == 0 {
+		return fmt.Errorf("Your task has empty description, please enter the name with flag --description")
+	}
+
+	task := model.TaskDTO{
+		Name:        model.Name(name),
+		Description: model.Description(description),
+	}
+
+	return c.Service.AddTask(task)
 }
 
 // TODO deleteTask - функция должна удалять задачу из хранилище

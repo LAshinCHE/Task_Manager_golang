@@ -1,21 +1,21 @@
 package model
 
-import "time"
+type Name string
+type Description string
 
-type Task struct {
-	ID              int
-	EmployeeID      int
-	AppointmentTime time.Time
-	Description     string
+// type Task struct {
+// 	ID              int
+// 	EmployeeID      int
+// 	AppointmentTime time.Time
+// 	Description     string
 
-	IsCompleted     bool
-	ExecutionPeriod time.Time
+// 	IsCompleted     bool
+// 	ExecutionPeriod time.Time
 
-	IssueTime time.Time
-}
+// 	IssueTime time.Time
+// }
 
-type TaksInput struct {
-	ID          int
-	EmployeeID  int
-	Description string
+type TaskDTO struct {
+	Name        Name
+	Description Description
 }

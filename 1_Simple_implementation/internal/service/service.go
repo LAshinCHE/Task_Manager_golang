@@ -7,10 +7,10 @@ import (
 )
 
 type storage interface {
-	AddTask(model.TaksInput) error
-	Get(string, ...int) ([]model.Task, error)
-	Update(model.Task) error
-	Delete(int) error
+	AddTask(model.TaskDTO) error
+	// Get(string, ...int) ([]model.Task, error)
+	// Update(model.Task) error
+	// Delete(int) error
 }
 
 type Service struct {
@@ -23,13 +23,8 @@ func NewService(st storage) *Service {
 	}
 }
 
-func (s Service) AddTask(excecutionPeriod int, descption string) error {
-	task := model.TaksInput{
-		ID:          1,
-		EmployeeID:  1,
-		Description: descption,
-	}
-	return s.storage.AddTask(task)
+func (s Service) AddTask(taskAdded model.TaskDTO) error {
+	return s.storage.AddTask(taskAdded)
 }
 
 func (s *Service) Help() {

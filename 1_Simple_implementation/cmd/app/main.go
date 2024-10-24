@@ -9,10 +9,12 @@ import (
 	"github.com/LAshinCHE/Task_Manager_golang/1_Simple_implementation/internal/storage"
 )
 
+var storageFilePass = "./data/storage.json"
+
 func main() {
 	argsWithoutProgs := os.Args[1:]
 
-	storageJson := storage.NewStorage("storage")
+	storageJson := storage.NewStorage(storageFilePass)
 
 	taskManagerService := service.NewService(storageJson)
 
