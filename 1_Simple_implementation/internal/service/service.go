@@ -8,7 +8,9 @@ import (
 
 type storage interface {
 	AddTask(model.TaskDTO) error
-	// Get(string, ...int) ([]model.Task, error)
+	ListTask() ([]model.TaskDTO, error)
+	DeleteTask(model.TaskDTO) error
+	//Get() ([]model.TaskDTO, error)
 	// Update(model.Task) error
 	// Delete(int) error
 }
@@ -27,6 +29,14 @@ func (s Service) AddTask(taskAdded model.TaskDTO) error {
 	return s.storage.AddTask(taskAdded)
 }
 
+func (s Service) DeleteTask(taskDeleted model.TaskDTO) error {
+	return s.storage.DeleteTask(taskDeleted)
+}
+
 func (s *Service) Help() {
 	fmt.Println("-help - print list command")
+}
+
+func (s *Service) ListTask() ([]model.TaskDTO, error) {
+	return s.storage.ListTask()
 }
