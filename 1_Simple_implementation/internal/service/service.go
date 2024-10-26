@@ -10,6 +10,7 @@ type storage interface {
 	AddTask(model.TaskDTO) error
 	ListTask() ([]model.TaskDTO, error)
 	DeleteTask(model.TaskDTO) error
+	FindTask(model.TaskDTO) (*model.TaskDTO, error)
 	//Get() ([]model.TaskDTO, error)
 	// Update(model.Task) error
 	// Delete(int) error
@@ -39,4 +40,8 @@ func (s *Service) Help() {
 
 func (s *Service) ListTask() ([]model.TaskDTO, error) {
 	return s.storage.ListTask()
+}
+
+func (s *Service) FindTask(taskToBeFound model.TaskDTO) (*model.TaskDTO, error) {
+	return s.storage.FindTask(taskToBeFound)
 }

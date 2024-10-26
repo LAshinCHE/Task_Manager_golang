@@ -133,3 +133,41 @@ func (s Storage) DeleteTask(deletedTask model.TaskDTO) error {
 
 	return os.WriteFile(s.filename, byteNewTaskREcods, 0666)
 }
+
+func (s Storage) FindTask(taskToBeFound model.TaskDTO) (*model.TaskDTO, error) {
+	if _, err := os.Stat(s.filename); errors.Is(err, os.ErrNotExist) {
+		if errCreateFile := s.createFile(); errCreateFile != nil {
+			return nil, errCreateFile
+		}
+	}
+
+	b, err := os.ReadFile(s.filename)
+
+	if err != nil {
+		return nil, err
+	}
+
+	var taskRecords []TaskRecord
+
+	if err = json.Unmarshal(b, &taskRecords); err != nil {
+		return nil, err
+	}
+
+	found := false
+	var task model.TaskDTO
+	for i := 0; i < len(taskRecords); i++ {
+		if taskRecords[i].Name == string(taskToBeFound.Name) {
+			found = true
+			task = model.TaskDTO{
+				Name:        model.Name(taskRecords[i].Name),
+				Description: model.Description(taskRecords[i].Description),
+			}
+		}
+	}
+
+	if found == false {
+		return nil, fmt.Errorf("Task didnt found in data storage")
+	}
+
+	return &task, nil
+}

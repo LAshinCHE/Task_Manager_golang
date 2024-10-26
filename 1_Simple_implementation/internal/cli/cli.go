@@ -11,6 +11,7 @@ type Service interface {
 	AddTask(model.TaskDTO) error
 	ListTask() ([]model.TaskDTO, error)
 	DeleteTask(model.TaskDTO) error
+	FindTask(model.TaskDTO) (*model.TaskDTO, error)
 }
 
 type Deps struct {
@@ -67,7 +68,7 @@ func (c CLI) HandleCommand(commands []string) error {
 	case listTask:
 		return c.listTask()
 	case findTask:
-		return c.findTask()
+		return c.findTask(commands[1:])
 	}
 
 	return nil
@@ -133,7 +134,32 @@ func (c CLI) deleteTask(args []string) error {
 }
 
 // TODO findTask - функция должна находить задачу в хранилище
-func (c CLI) findTask() error {
+func (c CLI) findTask(args []string) error {
+	var name string
+
+	fs := flag.NewFlagSet(deleteTask, flag.ContinueOnError)
+
+	fs.StringVar(&name, "name", "", "use --name=someName")
+
+	if err := fs.Parse(args); err != nil {
+		return nil
+	}
+
+	if len(name) == 0 {
+		return fmt.Errorf("Your task has empty name, please enter the name with flag --name")
+	}
+
+	task := model.TaskDTO{
+		Name: model.Name(name),
+	}
+
+	receivedTask, err := c.Service.FindTask(task)
+	if err != nil {
+		return err
+	}
+
+	fmt.Printf("Task: %s description: %s\n", receivedTask.Name, receivedTask.Description)
+
 	return nil
 }
 
