@@ -11,3 +11,7 @@ func NewCLI(serv service) *CLI {
 		service: serv,
 	}
 }
+
+func (c *CLI) Execute(args []string) error {
+	return nil
+}
