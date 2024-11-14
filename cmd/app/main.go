@@ -21,7 +21,7 @@ func main() {
 	scan := bufio.NewScanner(os.Stdin)
 	fmt.Println("___Welcome to the Personal Task Manager___\nA program for recording tasks.\nTo read the instructions, enter /help")
 	for {
-		fmt.Println("> ")
+		fmt.Print("> ")
 
 		scan.Scan()
 		command := strings.TrimSpace(scan.Text())
