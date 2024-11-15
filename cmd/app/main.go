@@ -11,8 +11,12 @@ import (
 	"github.com/LAshinCHE/Task_Manager_golang/internal/storage"
 )
 
+const (
+	fileName = "task_storage.json"
+)
+
 func main() {
-	JsonStorage := storage.NewStorage()
+	JsonStorage := storage.NewStorage(fileName)
 
 	taskManagerService := service.NewService(JsonStorage)
 
