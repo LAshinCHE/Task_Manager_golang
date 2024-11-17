@@ -15,6 +15,7 @@ type TaskDTO struct {
 
 type Task struct {
 	ID          uint64
+	EmployeeID  uint64
 	Name        string
 	Description string
 

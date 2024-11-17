@@ -3,7 +3,7 @@ package cli
 const (
 	help           = "help"
 	addTask        = "add"
-	tekeTask       = "take"
+	takeTask       = "take"
 	completeTask   = "complete"
 	changeEmployee = "change"
 	listTask       = "list"
@@ -24,6 +24,26 @@ func emplymentCommandList() []command {
 		{
 			name:        addTask,
 			description: "Add taks to storage.",
+		},
+		{
+			name:        takeTask,
+			description: "Take task to work",
+		},
+		{
+			name:        completeTask,
+			description: "Take task to work",
+		},
+		{
+			name:        changeEmployee,
+			description: "Change employee in selected task",
+		},
+		{
+			name:        listTask,
+			description: "Print task list in CLI",
+		},
+		{
+			name:        deleteTask,
+			description: "Delete task from storage",
 		},
 	}
 	return commands
